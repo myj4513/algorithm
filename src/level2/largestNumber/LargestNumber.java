@@ -1,6 +1,7 @@
 package level2.largestNumber;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class LargestNumber {
     public static void main(String[] args) {
@@ -13,35 +14,22 @@ public class LargestNumber {
 class Solution {
     public String solution(int[] numbers) {
         String answer = "";
-        String[] str = new String[numbers.length];
-        boolean[] used = new boolean[numbers.length];
+        String[] nums = new String[numbers.length];
+
         for(int i=0;i<numbers.length;i++){
-            str[i] = ""+numbers[i];
+            nums[i] = String.valueOf(numbers[i]);
         }
-        Arrays.sort(str);
-        System.out.println(Arrays.toString(str));
-        for(int i= str.length-1;i>=0;i--){
-            if(!used[i]){
-                if(str[i].length()>1){
-                    for(int k=0;k<str[i].length();k++){
-                        if(str[i].charAt(k)!=str[i].charAt(0)){
-                            if(str[i].charAt(k)>str[i].charAt(0))
-                                break;
-                            else{
-                                for(int j=i-1;j>=0;j--){
-                                    if(str[j].length()==1 && str[j].charAt(0)==str[i].charAt(0)){
-                                        used[j] = true;
-                                        answer += str[j];
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                used[i] = true;
-                answer += str[i];
+        Arrays.sort(nums, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return (o2+o1).compareTo(o1+o2);
             }
+        });
+        for(int i=0;i<nums.length;i++){
+            answer += nums[i];
         }
+        if(nums[0].equals("0"))
+            answer = "0";
         return answer;
     }
 }
