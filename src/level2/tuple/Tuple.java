@@ -1,6 +1,8 @@
 package level2.tuple;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Tuple {
     public static void main(String[] args) {
@@ -14,6 +16,7 @@ public class Tuple {
 class Solution {
     public int[] solution(String s) {
         int[] answer = {};
+        Set<String> set = new HashSet<>();
         System.out.println(s.substring(1,s.length()-1));
         return answer;
     }
