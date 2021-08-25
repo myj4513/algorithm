@@ -1,5 +1,7 @@
 package level2.makeLarge;
 
+import java.util.Arrays;
+
 public class MakeLarge {
     public static void main(String[] args) {
         Solution s = new Solution();
@@ -10,34 +12,19 @@ public class MakeLarge {
 
 class Solution {
     public String solution(String number, int k) {
-        String answer = "";
-        boolean[] check = new boolean[number.length()];
-        for(int i=0;i<number.length()-1;i++){
-            if(!check[i]){
-                for(int j=i+1;j<number.length();j++){
-                    if(!check[j]){
-                        if(number.charAt(i)<number.charAt(j)){
-                            check[i] = true;
-                            if(i>0)
-                                i-=2;
-                            else
-                                i--;
-                            k--;
-                        }
-                        break;
-                    }
+        StringBuilder sb = new StringBuilder(number);
+        int deleteIdx;
+        for(int i=0;i<k;i++){
+            deleteIdx = sb.length()-1;
+            for(int j=0;j<number.length();j++){
+                if(sb.charAt(j)<sb.charAt(j+1)){
+                    deleteIdx=j;
+                    break;
                 }
             }
-            if(k==0) break;
+            sb.deleteCharAt(deleteIdx);
         }
-
-        for(int i=0;i<number.length();i++){
-            if(!check[i])
-                answer += number.charAt(i);
-        }
-        if(k>0){
-            answer = answer.substring(0,answer.length()-k);
-        }
-        return answer;
+        return sb.toString();
     }
+
 }
