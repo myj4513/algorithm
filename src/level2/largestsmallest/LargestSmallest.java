@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class LargestSmallest {
     public static void main(String[] args) {
         Solution s = new Solution();
-        String answer = s.solution("1 2 3 4");
+        String answer = s.solution("1 2 3 4 5 6");
         System.out.println(answer);
     }
 }
