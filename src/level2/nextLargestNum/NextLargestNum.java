@@ -8,7 +8,7 @@ public class NextLargestNum {
     }
 }
 
-/*
+
 class Solution {
     public int solution(int n) {
         String s = Integer.toString(n, 2);
@@ -47,8 +47,9 @@ class Solution {
         return Integer.parseInt(sb.toString(), 2);
     }
 }
-*/
 
+
+/*
 class Solution
 {
     public int nextBigNumber(int n)
@@ -64,4 +65,4 @@ class Solution
 
         return compare;
     }
-}
+}*/
