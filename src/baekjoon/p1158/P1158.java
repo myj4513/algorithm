@@ -1,4 +1,4 @@
-package baekjoon;
+package baekjoon.p1158;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
