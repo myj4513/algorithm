@@ -9,7 +9,7 @@ public class Main {
 
         int N = scanner.nextInt();
 
-        String result = "";
+        StringBuilder sb = new StringBuilder();
 
         ArrayList<int[]> dl = new ArrayList<>();
         for(int i=0;i<N;i++){
@@ -18,7 +18,8 @@ public class Main {
 
         while (true) {
             int[] poll = dl.remove(0);
-            result += poll[0]+" ";
+            sb.append(poll[0]);
+            sb.append(" ");
             if(dl.isEmpty())
                 break;
             if(poll[1]>0){
@@ -32,7 +33,7 @@ public class Main {
                 }
             }
         }
-        System.out.println(result);
+        System.out.println(sb);
     }
 }
 
