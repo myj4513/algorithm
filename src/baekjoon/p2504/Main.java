@@ -8,71 +8,47 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         String str = scanner.nextLine();
-        Stack<String> stack = new Stack<>();
+        Stack<Character> stack = new Stack<>();
+
+        int mul = 1;
+        int answer = 0;
+
+        boolean flag = true;
 
         for(int i=0;i<str.length();i++){
-            String c = String.valueOf(str.charAt(i));
-            if(Character.isDigit(c.charAt(0))){
-                while(Character.isDigit(str.charAt(i+1))){
-                    c+=str.charAt(++i);
-                }
-            }
-
-            int tmp = 0;
-            if (c.equals("(") || c.equals("[")) {
+            char c = str.charAt(i);
+            if(c=='('){
                 stack.push(c);
+                mul *= 2;
             }
-            else if (c.equals(")")) {
-                if(stack.isEmpty()){
-                    System.out.println(0);
-                    return;
+            else if (c == '[') {
+                stack.push(c);
+                mul *= 3;
+            }
+            else {
+                if (c == ')') {
+                    if (stack.isEmpty() || stack.pop() != '(') {
+                        flag = false;
+                        break;
+                    }
+                    if(str.charAt(i - 1) == '(')
+                        answer += mul;
+                    mul/=2;
+                } else if (c == ']') {
+                    if (stack.isEmpty() || stack.pop() != '[') {
+                        flag = false;
+                        break;
+                    }
+                    if(str.charAt(i - 1) == '[')
+                        answer += mul;
+                    mul/=3;
                 }
-                while (!stack.peek().equals("(")) {
-                    String pop = stack.pop();
-                    if (pop.equals("[") || stack.isEmpty()) {
-                        System.out.println(0);
-                        return;
-                    } else
-                        tmp += Integer.parseInt(pop);
-                }
-                stack.pop();
-                if (tmp == 0) {
-                    stack.push("2");
-                } else
-                    stack.push(String.valueOf(2 * tmp));
-            } else if (c.equals("]")) {
-                if(stack.isEmpty()){
-                    System.out.println(0);
-                    return;
-                }
-                while (!stack.peek().equals("[")) {
-                    String pop = stack.pop();
-                    if (pop.equals("(") || stack.isEmpty()) {
-                        System.out.println(0);
-                        return;
-                    } else
-                        tmp += Integer.parseInt(pop);
-                }
-                stack.pop();
-                if (tmp == 0) {
-                    stack.push("3");
-                } else
-                    stack.push(String.valueOf(3 * tmp));
-            } else
-                stack.add(c);
-        }
-
-        int result = 0;
-
-        while(!stack.isEmpty()){
-            try {
-                result += Integer.parseInt(stack.pop());
-            } catch (Exception e) {
-                System.out.println(0);
-                return;
             }
         }
-        System.out.println(result);
-
+        if (!stack.isEmpty() || !flag) {
+            System.out.println(0);
+            return;
+        }
+        System.out.println(answer);
     }
 }
