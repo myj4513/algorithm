@@ -1,4 +1,4 @@
-package baekjoon.p2228;
+package baekjoon.p2228_unsolved;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class Main {
         int max = -1;
         for (int i = 1; i <= M; i++) {
             for (int j = i + 2; j <= M; j++) {
-                max = Math.max(dp[i])
+//                max = Math.max(dp[i]);/
             }
         }
 
