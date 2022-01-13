@@ -24,33 +24,41 @@ public class Main {
         }
 
         Arrays.sort(trees);
-        int start = 0;
-        int end = N-1;
-        int result = binarySearch(start, end, M);
+
+//        System.out.println(Arrays.toString(trees));
+        long start = 0;
+        long end = trees[N-1];
+        long result = binarySearch(start, end, M);
         System.out.println(result);
     }
 
-    public static int binarySearch(int start, int end, int target){
-        int tmp = (end + start) / 2;
-        while (end - start > 0) {
-
+    public static long binarySearch(long start, long end, int target){
+        long tmp = -1;
+        boolean isOver = false;
+        while (end - start >= 0) {
+            tmp = (end + start) / 2;
             long sum = 0;
             for (int i = 0; i < N; i++) {
-                sum += (trees[i] - trees[tmp] <= 0 ? 0 : trees[i] - trees[tmp]);
+                sum += (trees[i] > tmp ? trees[i] - tmp : 0);
             }
-            System.out.println(sum);
+//            System.out.println("end = " + end);
+//            System.out.println("start = " + start);
+//            System.out.println("sum = " + sum);
+//            System.out.println("tmp = " + tmp);
+//            System.out.println("====================");
             if(sum < target){
                 end = tmp - 1;
+                isOver = false;
             }
             else if(sum > target){
-                start = tmp;
+                start = tmp + 1;
+                isOver = true;
             }
             else {
-                return trees[tmp];
+                return tmp;
             }
-            tmp = (end + start) / 2;
         }
 
-        return trees[tmp]-1;
+        return isOver?tmp:tmp - 1;
     }
 }
