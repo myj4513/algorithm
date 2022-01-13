@@ -33,9 +33,8 @@ public class Main {
     }
 
     public static long binarySearch(long start, long end, int target){
-        long tmp = -1;
-        boolean isOver = false;
-        while (end - start >= 0) {
+        long tmp = 0;
+        while (end > start) {
             tmp = (end + start) / 2;
             long sum = 0;
             for (int i = 0; i < N; i++) {
@@ -47,18 +46,13 @@ public class Main {
 //            System.out.println("tmp = " + tmp);
 //            System.out.println("====================");
             if(sum < target){
-                end = tmp - 1;
-                isOver = false;
-            }
-            else if(sum > target){
-                start = tmp + 1;
-                isOver = true;
+                end = tmp;
             }
             else {
-                return tmp;
+                start = tmp + 1;
             }
         }
 
-        return isOver?tmp:tmp - 1;
+        return start -1;
     }
 }
