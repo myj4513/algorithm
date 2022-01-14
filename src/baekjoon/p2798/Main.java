@@ -18,38 +18,23 @@ public class Main {
         M = Integer.parseInt(st.nextToken());
 
         nums = new int[N];
-
         st = new StringTokenizer(br.readLine());
-        for(int i=0;i<N;i++){
+        for (int i = 0; i < N; i++) {
             nums[i] = Integer.parseInt(st.nextToken());
         }
-        dfs(0,0,new boolean[N]);
 
-        System.out.println(max);
-
-    }
-
-    public static void dfs(int i, int size, boolean[] used){
-        if(size==3){
-            int sum = 0;
-            if(sum == M){
-                max = M;
-                return;
+        int max = -1;
+        int sum = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = i + 1; j < N; j++) {
+                for (int k = j + 1; k < N; k++) {
+                    sum = nums[i] + nums[j] + nums[k];
+                    if (sum <= M && sum > max) {
+                        max = sum;
+                    }
+                }
             }
-            for(int j=0;j<used.length;j++){
-                if(used[j])
-                    sum += nums[j];
-            }
-            if(sum <= M && sum>max)
-                max = sum;
         }
-
-        if(i==used.length)
-            return;
-
-        used[i] = true;
-        dfs(i+1, size+1, used);
-        used[i] = false;
-        dfs(i+1, size, used);
+        System.out.println(max);
     }
 }
