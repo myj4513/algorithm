@@ -9,17 +9,11 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         long n = Long.parseLong(br.readLine());
 
-        long start = 0L;
-        long end = n;
-        while (end - start > 0) {
-            long tmp = (end + start)/2;
-            if (tmp >= Math.sqrt(n)) {
-                end = tmp;
-            }
-            else{
-                start = tmp + 1;
-            }
+        long sqrt = (long) Math.sqrt(n);
+        if (sqrt * sqrt >= n) {
+            System.out.println(sqrt);
+        } else {
+            System.out.println(sqrt+1);
         }
-        System.out.println(end);
     }
 }
