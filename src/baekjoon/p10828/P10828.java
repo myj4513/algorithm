@@ -1,38 +1,40 @@
 package baekjoon.p10828;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.StringTokenizer;
 
 public class P10828 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        StringTokenizer st = null;
         Stack<Integer> s = new Stack<>();
-        Scanner scanner = new Scanner(System.in);
-        int N = Integer.valueOf(scanner.nextLine());
+        StringBuilder sb = new StringBuilder();
+
         for(int i=0;i<N;i++){
-            String[] str = scanner.nextLine().split(" ");
-            if(str[0].equals("push")){
-                s.push(Integer.parseInt(str[1]));
+            st = new StringTokenizer(br.readLine());
+            String command = st.nextToken();
+            if(command.equals("push")){
+                s.push(Integer.parseInt(st.nextToken()));
+                continue;
             }
-            else if(str[0].equals("pop")){
-                if(s.isEmpty())
-                    System.out.println(-1);
-                else
-                    System.out.println(s.pop());
+            else if(command.equals("pop")){
+                sb.append(s.isEmpty() ? -1 : s.pop());
             }
-            else if(str[0].equals("size")){
-                System.out.println(s.size());
+            else if(command.equals("size")){
+                sb.append(s.size());
             }
-            else if(str[0].equals("empty")){
-                if(s.isEmpty())
-                    System.out.println(1);
-                else
-                    System.out.println(0);
+            else if(command.equals("empty")){
+                sb.append(s.isEmpty() ? 1 : 0);
             }
-            else if(str[0].equals("top"))
-                if(s.isEmpty())
-                    System.out.println(-1);
-                else
-                    System.out.println(s.peek());
+            else if(command.equals("top"))
+                sb.append(s.isEmpty() ? -1 : s.peek());
+            sb.append('\n');
         }
+        System.out.println(sb);
     }
 }
