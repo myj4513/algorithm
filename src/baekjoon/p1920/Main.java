@@ -36,7 +36,7 @@ public class Main {
     }
 
     private static boolean binarySearch(int start, int end, int n) {
-        if(start >= end) return false;
+        if(start > end) return false;
         int mid = (start + end)/2;
         if (arr[mid] == n) {
             return true;
