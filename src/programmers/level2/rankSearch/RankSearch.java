@@ -5,74 +5,59 @@ import java.util.*;
 public class RankSearch {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] result = s.solution(new String[]{"java backend junior pizza 150"},
-                new String[]{"java and backend and junior and pizza 100","python and frontend and senior and chicken 200","cpp and - and senior and pizza 250","- and backend and senior and - 150","- and - and - and chicken 100","- and - and - and - 150"});
+        int[] result = s.solution(new String[]{"java backend junior pizza 150", "python frontend senior chicken 210", "python frontend senior chicken 150", "cpp backend senior pizza 260", "java backend junior chicken 80", "python backend senior chicken 50"},
+                new String[]{"java and backend and junior and pizza 100", "python and frontend and senior and chicken 200", "cpp and - and senior and pizza 250", "- and backend and senior and - 150", "- and - and - and chicken 100", "- and - and - and - 150", "- and - and - and - 1000"});
         System.out.println(Arrays.toString(result));
     }
 }
 
 class Solution {
-    Map<String, List<Integer>> map = new HashMap<>();
-    String[][] str = {{"-","java","cpp","python"}, {"-","backend","frontend"},{"-","junior","senior"},{"-","chicken","pizza"}};
-    List<String> list = new ArrayList<>();
+    private static Map<String, List<Integer>> map;
+
     public int[] solution(String[] info, String[] query) {
-        int answer = 0;
-        comb(0, 4, "");
-
-        for(int i=0;i<list.size();i++){
-            map.put(list.get(i), new ArrayList<Integer>());
+        map = new HashMap<>();
+        for (String information : info) {
+            String[] infoArray = information.split(" ");
+            comb(0, "", infoArray);
         }
 
-        for(int i=0;i< info.length;i++){
-            String[] word = info[i].split(" ");
-            List<String> list2 = new ArrayList<String>();
-            comb2(0, 4, "", word, list2);
-            for(int j=0;j<list2.size();j++){
-                String s = list2.get(j);
-                List<Integer> l = map.get(s);
-                l.add(Integer.parseInt(word[4]));
-                map.put(s, l);
-            }
+        for (String key : map.keySet()) {
+            Collections.sort(map.get(key));
         }
-        int[] result = new int[query.length];
-        for(int i=0;i< query.length;i++){
-            String[] word = query[i].split(" ");
-            String s = word[0]+word[2]+word[4]+word[6];
-            List<Integer> integers = map.get(s);
-            integers.sort(Comparator.naturalOrder());
-            int idx = Collections.binarySearch(integers, Integer.parseInt(word[7]));
-            if(idx<0){
-                idx = -(idx+1);
-            } else{
-                if(idx-1>=0){
-                    while(integers.get(idx-1)== integers.get(idx)){
-                        idx--;
-                    }
-                }
-            }
-            answer = integers.size() - idx;
-            result[i] = answer;
+        List<Integer> answer = new ArrayList<>();
+        for (String singleQuery : query) {
+            singleQuery = singleQuery.replaceAll(" and ", "");
+            String[] s = singleQuery.split(" ");
+
+            answer.add(map.containsKey(s[0]) ? biSearch(s[0], Integer.parseInt(s[1])) : 0);
         }
 
-        return result;
+        return answer.stream().mapToInt(Integer::intValue).toArray();
     }
 
-    public void comb2(int count, int maxCount, String s, String[] word, List<String> list2){
-        if(count==maxCount){
-            list2.add(s);
-            return;
+    private int biSearch(String key, int target) {
+        List<Integer> list = map.get(key);
+        int start = 0, end = list.size() - 1;
+        while (start <= end) {
+            int mid = (start + end) / 2;
+            if (list.get(mid) < target) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
         }
-        comb2(count+1, maxCount, s+"-", word, list2);
-        comb2(count+1, maxCount, s+word[count], word, list2);
+        return list.size() - start;
     }
 
-    public void comb(int count, int maxCount, String s){
-        if(count==maxCount){
-            list.add(s);
+    private void comb(int depth, String str, String[] infoArray) {
+        if (depth == 4) {
+            if (!map.containsKey(str)) {
+                map.put(str, new ArrayList<>());
+            }
+            map.get(str).add(Integer.parseInt(infoArray[4]));
             return;
         }
-        for(int i=0;i<str[count].length;i++){
-            comb(count+1, maxCount, s+str[count][i]);
-        }
+        comb(depth + 1, str + "-", infoArray);
+        comb(depth + 1, str + infoArray[depth], infoArray);
     }
 }
