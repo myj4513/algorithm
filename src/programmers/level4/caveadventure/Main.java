@@ -1,4 +1,4 @@
-package programmers.skillchecktest.level4.problem1;
+package programmers.level4.caveadventure;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
