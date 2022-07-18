@@ -1,5 +1,9 @@
 package programmers.level3.bestset;
 
+/**
+ * 프로그래머스 레벨 3 - 최고의 집합
+ */
+
 import java.util.Arrays;
 
 public class Main {
