@@ -1,4 +1,4 @@
-package programmers.longestpalindrome;
+package programmers.level3.longestpalindrome;
 
 /**
  * 프로그래머스 레벨 3 - 가장 긴 팰린드롬

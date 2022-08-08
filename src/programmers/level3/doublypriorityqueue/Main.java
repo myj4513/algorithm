@@ -4,51 +4,58 @@ package programmers.level3.doublypriorityqueue;
  * 프로그래머스 레벨 3 - 이중우선순위큐
  */
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-//        System.out.println(Arrays.toString(new Solution().solution(new String[]{"I 16", "I -5643", "D -1", "D 1", "D 1", "I 123", "D -1"})));
-        System.out.println(Arrays.toString(new Solution().solution(new String[]{"I -45", "I -653", "D 1", "I -642", "I 45", "I 97", "D 1", "D -1", "I 333"})));
+        System.out.println(Arrays.toString(new Solution().solution(new String[]{"I 16", "I -5643", "D -1", "D 1", "D 1", "I 123", "D -1"})));
+//        System.out.println(Arrays.toString(new Solution().solution(new String[]{"I -45", "I 653", "D 1", "I -642", "I 45", "I 97", "D 1", "D -1", "I 333"})));
     }
 }
 
 class Solution {
     public int[] solution(String[] operations) {
-        List<Integer> list = new ArrayList<>();
+        LinkedList<Integer> list = new LinkedList<>();
+
         for (int i = 0; i < operations.length; i++) {
-            String[] split = operations[i].split(" ");
-            if (split[0].equals("I")) {
-                int tmp = Integer.parseInt(split[1]);
-                if (list.isEmpty()) {
-                    list.add(tmp);
-                    continue;
-                }
-                int start = 0;
-                int end = list.size() - 1;
-                int mid = -1;
-                while (start <= end) {
-                    mid = (start + end) / 2;
-                    if (list.get(mid) < tmp) {
-                        mid++;
-                        start = mid;
-                    } else if (list.get(mid) > tmp) {
-                        end = mid - 1;
-                    } else {
-                        break;
-                    }
-                }
-                list.add(mid, tmp);
-            } else {
+            char command = operations[i].charAt(0);
+            int num = Integer.parseInt(operations[i].substring(2));
+            if (command == 'I') {
+                addList(list, num);
+            } else if (command == 'D') {
                 if(list.isEmpty()) continue;
-                if (split[1].equals("1")) {
-                    list.remove(list.size() - 1);
+                if (num == 1) {
+                    list.removeLast();
                 } else {
-                    list.remove(0);
+                    list.removeFirst();
                 }
             }
         }
-        if(list.isEmpty()) return new int[]{0, 0};
-        return new int[]{list.get(list.size() - 1), list.get(0)};
+
+        if (list.size() == 0) {
+            return new int[]{0, 0};
+        } else {
+            return new int[]{list.getLast(), list.getFirst()};
+        }
+    }
+
+    private void addList(List<Integer> list, int num) {
+        //binary
+        int start = 0;
+        int end = list.size() - 1;
+        int result = 0;
+        while (start <= end) {
+            int mid = (start + end) / 2;
+            if (list.get(mid) >= num) {
+                result = mid;
+                end = mid - 1;
+            } else {
+                result = mid + 1;
+                start = mid + 1;
+            }
+        }
+        list.add(result, num);
     }
 }
