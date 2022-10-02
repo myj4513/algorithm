@@ -45,7 +45,7 @@ public class Main {
             this.left = left;
             this.right = right;
         }
-
+        
         void insertNode(int val) {
             while (true) {
                 if (val < this.val) {
